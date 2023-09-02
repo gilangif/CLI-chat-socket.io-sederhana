@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <input type="text" id="input" value="haha">
+  <button id="btn">Coba</button>
+  <div id="box"></div>
+  <script>
+    const socket = io();
+    const box = document.getElementById("box")
+    const input = document.getElementById("input")
+    const btn = document.getElementById("btn")
+
+    const buat = (data) => {
+      const test = document.createElement("div")
+      test.innerHTML = data
+      box.appendChild(test)
+    }
+
+    btn.addEventListener("click", () => {
+      buat(input.value)
+      socket.emit('pesan', input.value);
+    })
+
+    socket.on('pesan-balasan', (data) => {
+      buat(data)
+    });
+    
+  </script>
+</body>
+</html>
